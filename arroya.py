@@ -47,8 +47,8 @@ def referer_list():
 
 def handler(signum,_):
 	if signum == signal.SIGALRM:
-		print "Time is up !"
-		print "Attack finished !"
+		print ("Time is up !")
+		print ("Attack finished !")
 	sys.exit()
 
 #builds random ascii string
@@ -147,4 +147,4 @@ if __name__ == '__main__':
 #			print ("Child process",os.getpid(),newpid)
 	time.sleep(int(interval))
 	signal.alarm(0)
-	print "main thread exit..."
+	print ("main thread exit...")
