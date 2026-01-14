@@ -192,8 +192,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-pip uninstall arts
-pip install arts
-
-python3 logok.py -u https://israellawcenter.org -t 100 -p soks5 
