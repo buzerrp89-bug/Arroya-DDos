@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
+import os
+import sys
 import random
 import re
 try:
     import requests
 except ImportError:
-    print('You must install requests lib\n $ pip install requests')
+    print('install requests lib\n $ pip install requests')
 import threading
 import time
 import argparse
