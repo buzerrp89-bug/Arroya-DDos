@@ -6,7 +6,6 @@ import sys
 import random
 import re
 import requests
-except ImportError:
 import threading
 import time
 import argparse
