@@ -7,6 +7,15 @@ import undetected_chromedriver as webdriver
 from sys import stdout
 from colorama import Fore, init
 
+# Get the absolute path to the directory where the script is located
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# Construct the full path to the file
+file_path = os.path.join(script_dir, 'resources', 'ua.txt')
+
+with open(file_path, 'r') as f:
+    # Your file operations here
+    content = f.read()
+
 def clear(): 
     if name == 'nt': 
         system('cls')
