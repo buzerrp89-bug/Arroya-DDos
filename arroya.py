@@ -11,10 +11,10 @@ import urllib2
 import threading
 
 def usage():
-	print ''' usage : python layer.py [-t] [-c] https://anti-leak.cf
+	print (''' usage : python layer.py [-t] [-c] https://anti-leak.cf
 	-h : help
 	-t : lasting time of ddos
-	-c : numbers of thread to create'''
+	-c : numbers of thread to create''')
 	sys.exit()
 
 # generates a user agent array
