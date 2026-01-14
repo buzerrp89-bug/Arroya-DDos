@@ -11,7 +11,9 @@ import threading
 import time
 import argparse
 try:
-    from arts import header, options
+    from arts import Header
+# Now you can use Header
+
 
 config = {}     # Stores de configuration provided by the user
 success = 0     # Count of the amount of packets successfully send
