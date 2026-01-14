@@ -5,14 +5,13 @@ import os
 import sys
 import random
 import re
-try:
-    import requests
+import requests
 except ImportError:
-    print('install requests lib\n $ pip install requests')
 import threading
 import time
 import argparse
-from arts import header, options
+try:
+    from arts import header, options
 
 config = {}     # Stores de configuration provided by the user
 success = 0     # Count of the amount of packets successfully send
