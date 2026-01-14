@@ -170,7 +170,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         ua = open('./resources/ua.txt', 'r').read().split('\n')
         title()
-    while True:
+        while True:
             command()
     elif len(sys.argv) == 5:
         pass
