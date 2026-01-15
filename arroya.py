@@ -77,7 +77,7 @@ def handleStatusCodes(status_code):
 	global request_counter
 	sys.stdout.write("\r%i \033[1;32mrequests\033[0m" % request_counter)
 	sys.stdout.flush()
-	print(" \033[1;33mInfo url\033[1;36m" +(url)+ "\033[1;36mpayload\033[0m")
+	print(" \033[1;33m| Info url \033[1;36m |" +(target)+ "| \033[1;36mpayload\033[0m")
 	sys.stdout.flush()
 	if status_code == 429:
 			printMsg("You have been throttled")
