@@ -75,7 +75,7 @@ def initHeaders():
 
 def handleStatusCodes(status_code):
 	global request_counter
-	sys.stdout.write("\033[48;5;4m \033[38;5;0m| r%i |\033[90mrequests\033[0m" % request_counter)
+	sys.stdout.write("\033[48;5;4m \033[38;5;0m| r%i |\033[90mrequests"+ % +"\033[0m" request_counter)
 	sys.stdout.flush()
 	print(" \033[1;33m| Info url \033[1;36m |" +(url)+ "| \033[1;36mpayload\033[0m")
 	sys.stdout.flush()
