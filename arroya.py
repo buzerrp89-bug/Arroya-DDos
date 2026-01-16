@@ -10,6 +10,7 @@ import re
 import argparse
 import fade
 
+attemps = 0
 os.system( 'clear' )
 logo = """ 
       ████╗ █████╗   
@@ -28,7 +29,7 @@ while attemps < 100:
         username = input("\033[32m┏> Enter your username: \033[0m")
         password = input("\033[32m┗> Enter your password: \033[0m")
 
-        if username == 'ba313' and password == 'ba313':
+        if username == 'kun' and password == 'kun':
             print("\033[48;5;3m•••⟩⟩ R U A N G  P E J U A N G ...!!\033[0m")
             break
         else:
