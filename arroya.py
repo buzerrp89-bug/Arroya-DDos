@@ -8,36 +8,33 @@ import threading
 import random
 import re
 import argparse
-import fade
 
 os.system( 'clear' )
-logo = """
+print("""
 \033[0;30m═════════════════════════════════════════════════════════════════════\033[0m
 
   
-      ████  ████   
-     █╔═══█ █    █    
-     █    █ █    █\033[1;32m█████   ████  █     █   ████
-     █    █ █    █\033[1;32m█      █ █     █ █     █  █     █  
-     ██████  ████  \033[1;32m█        █     █ █     █ █      █
-     █╔══█ █   █ \033[1;32m█        █     █ █     █ █      █
-     █    █ █    █\033[1;32m█         ████  ████    ████
+\033[31m      ████  ████   
+\033[31m     █╔═══█ █    █    
+\033[31m     █    █ █    █\033[1;32m█████   ████  █     █   ████
+\033[31m     █    █ █    █\033[1;32m█      █ █     █ █     █  █     █  
+\033[31m     ██████  ████  \033[1;32m█        █     █ █     █ █      █
+\033[31m     █╔═══█ █   █ \033[1;32m█        █     █ █     █ █      █
+\033[31m     █    █ █    █\033[1;32m█         ████  ████    ████
                     \033[1;32m                        █
 					\033[1;32m                   ████
 ╔══════════╗
 ╚═══════════╝
 
 \033[0;30m════════════════════════════════════════════════════════════════════\033[0m
-"""
-faded_text = fade.fire(logo)
-print(faded_text)
+""")
 def main():
     attemps = 0
     # Print header when tool runs
-    print(f"{Fore.LIGHTRED_EX}╔{'═' * 55}╗")
-    print(f"{Fore.LIGHTRED_EX}║\033[48;5;1m\033[97m  Design: Kunfayz namaku{' ' * 30} \033[0m{Fore.LIGHTRED_EX}║")
-    print(f"{Fore.LIGHTRED_EX}║\033[48;5;1m\033[97m  Black Army Cyber grupe{' ' * 30} \033[0m{Fore.LIGHTRED_EX}║")
-    print(f"{Fore.LIGHTRED_EX}╚{'═' * 55}╝")
+    print(f"\033[94m╔{'═' * 55}╗")
+    print(f"\033[94m║\033[48;5;1m\033[97m  Design: Kunfayz namaku{' ' * 30} \033[0m\033[94m║")
+    print(f"\033[94m║\033[48;5;1m\033[97m  Black Army Cyber grupe{' ' * 30} \033[0m\033[94m║")
+    print(f"\033[94m╚{'═' * 55}╝")
 
     while attemps < 100:
         username = input("\033[32m┏━━━━━> Enter your username: \033[0m")
