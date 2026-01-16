@@ -10,8 +10,6 @@ import re
 import argparse
 import fade
 
-
-attemps = 0
 os.system( 'clear' )
 logo = """ 
       ████╗ █████╗   
@@ -131,6 +129,7 @@ class SendPOSTThread(threading.Thread):
 
 # TODO:
 # check if the site stop responding and alert
+attemps = 0
 def main():
     # Print header when tool runs
     print(f"\033[94m╔{'═' * 55}╗")
