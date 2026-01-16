@@ -4,15 +4,16 @@
 import os
 import requests
 import sys
-import time
 import threading
 import random
 import re
 import argparse
+import fade
+
 
 attemps = 0
 os.system( 'clear' )
-   print(""" 
+   logo = """ 
    \033[31m      ████╗ █████╗   
    \033[31m     █╔═══█╗█╔═══█╗ \033[1;32m█████╗ █╗   █╗   ████  
    \033[31m     █║   █║█║   █║\033[1;32m█╔════█╗█║   █║ █     █  █     █  
@@ -23,7 +24,7 @@ os.system( 'clear' )
    \033[31m     ╚╝   ╚╝╚╝   ╚╝ \033[1;32m╚════╝      █║  
    \033[1;32m                                            ████║
    \033[31m                                              ╚═══╝
-   """)
+   """
 
 def main():
     # Print header when tool runs
