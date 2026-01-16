@@ -17,7 +17,7 @@ print("""
 \033[31m     █║   █ █║   █\033[1;32m█████   ████  █     █   ████
 \033[31m     █║   █ █║   █\033[1;32m█    █ █     █ █     █  █     █  
 \033[31m     ██████ █████ \033[1;32m█        █     █ █     █ █      █
-\033[31m     █╔═══█ █╔══█ \033[1;32m█        █     █ █     █ █      █
+\033[31m     █╔═══█ █╔═█ \033[1;32m█        █     █ █     █ █      █
 \033[31m     █║   █ █║   █\033[1;32m█         ████  ████    ████
 \033[31m     ╚╝   ╚╝╚╝   ╚╝         \033[1;32m                        █
 					\033[1;32m                   ████
@@ -95,7 +95,7 @@ def handleStatusCodes(status_code):
 	global request_counter
 	time.sleep(2)
 	sys.stdout.write(f"\033[103m\033[38;5;0m|%i \033[90mrequests|\033[0m" % request_counter)
-	print(f"\033[38;5;6m Info \033[33m" +str(url)+ " \033[1;36mpayload")
+	print(f"\033[38;5;7m Info \033[33m" +str(url)+ " \033[1;36mpayload")
 	sys.stdout.flush()
 	if status_code == 429:
 			printMsg("You have been throttled")
