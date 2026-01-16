@@ -31,8 +31,8 @@ def main():
     print(f"\033[94m╚{'═' * 55}╝")
 
     while attemps < 100:
-        username = input("\033[32m┏━━━━━> Enter your username: \033[0m")
-        password = input("\033[32m┗━━━━━> Enter your password: \033[0m")
+        username = input("\033[32m┏> Enter your username: \033[0m")
+        password = input("\033[32m┗> Enter your password: \033[0m")
 
         if username == 'ba313' and password == 'ba313':
             print("\033[48;5;3m•••⟩⟩ R U A N G  P E J U A N G ...!!\033[0m")
@@ -95,7 +95,7 @@ def handleStatusCodes(status_code):
 	global request_counter
 	time.sleep(2)
 	sys.stdout.write(f"\033[103m\033[38;5;0m|%i \033[90mrequests|\033[0m" % request_counter)
-	print(f"\033[38;5;6m Info \033[1;36m" +str(url)+ " \033[32mpayload")
+	print(f"\033[38;5;6m Info \033[33m" +str(url)+ " \033[1;36mpayload")
 	sys.stdout.flush()
 	if status_code == 429:
 			printMsg("You have been throttled")
