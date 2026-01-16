@@ -94,7 +94,7 @@ def initHeaders():
 def handleStatusCodes(status_code):
 	global request_counter
 	time.sleep(2)
-	sys.stdout.write(f"\033[103m\033[38;5;0m|%i \033[90mamount of requests| \033[38;5;7m In order\033[0m" % request_counter)
+	sys.stdout.write(f"\033[103m\033[38;5;0m|%i \033[90mamount of requests|\033[0m \033[38;5;7m In order" % request_counter)
 	print(f"\033[33m" +str(url)+ " \033[1;36mpayload\033[0m")
 	sys.stdout.flush()
 	if status_code == 429:
