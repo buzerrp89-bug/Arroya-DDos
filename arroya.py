@@ -93,7 +93,7 @@ def initHeaders():
 
 def handleStatusCodes(status_code):
 	global request_counter
-	time.sleep(2)
+	print("")
 	sys.stdout.write(f"\033[103m\033[38;5;0m|%i \033[90mamount of requests|\033[0m" % request_counter)
 	print("")
 	sys.stdout.write(f"\033[38;5;7m In order \033[33m" +str(url)+ " \033[1;36mpayload")
